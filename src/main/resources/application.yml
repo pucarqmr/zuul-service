@@ -1,0 +1,63 @@
+server:
+  port: 8303
+
+spring:
+  application:
+    name: zuul-gateway-service
+
+eureka:
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://localhost:8302/eureka/
+  instance:
+    hostname: localhost
+  
+zuul:
+  sensitiveHeaders: Cookie,Set-Cookie
+  host:
+    connect-timeout-millis: 5000000
+    socket-timeout-millis: 5000000
+  ignoredServices: '*'
+  prefix: /api
+  routes:
+    servicos-cidadao-service:
+      path: /servicos/**
+      serviceId: servicos-cidadao-service
+      strip-prefix: true
+    authentication-service:
+      path: /login/**
+      serviceId: authentication-service
+      stripPrefix: false
+
+management: 
+  endpoints:
+    web:
+      exposure:
+        include: hystrix.stream    
+
+hystrix:
+  command:
+    default:
+      circuitBreaker:
+        requestVolumeThreshold: 10
+        sleepWindowInMilliseconds: 1000
+        errorThresholdPercentage: 50
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 160000000
+            
+security.jwt.secret: PosPuc2021RodrigoMagnun
+
+            
+#endpoints:
+#  routes:
+#    sensitive: false            
+#    
+#    
+#ribbon:
+#   eureka:
+#      enabled: false
+
