@@ -51,7 +51,10 @@ public class ZullSecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .antMatchers(HttpMethod.GET, "/api/servicos/alunos").hasAnyRole("ADMIN")
                     .antMatchers(HttpMethod.GET, "/api/servicos/alunos/**").hasAnyRole("ADMIN", "CIDADAO")
                     .antMatchers(HttpMethod.PUT, "/api/servicos/alunos/**").hasAnyRole("ADMIN", "CIDADAO")
-                    .antMatchers(HttpMethod.DELETE, "/api/servicos/alunos/**").hasAnyRole("ADMIN");
+                    .antMatchers(HttpMethod.DELETE, "/api/servicos/alunos/**").hasAnyRole("ADMIN")
+                    
+                    .antMatchers(HttpMethod.GET, "/api/geo/indicadores/pesquisas/**").hasAnyRole("ADMIN")
+                    ;
     }
 
 }

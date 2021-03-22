@@ -26,6 +26,10 @@ zuul:
       path: /servicos/**
       serviceId: servicos-cidadao-service
       strip-prefix: true
+    georeferenciamento-service:
+      path: /geo/**
+      serviceId: georeferenciamento-service
+      strip-prefix: true
     authentication-service:
       path: /login/**
       serviceId: authentication-service
