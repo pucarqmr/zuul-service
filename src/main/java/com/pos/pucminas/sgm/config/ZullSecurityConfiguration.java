@@ -3,8 +3,11 @@ package com.pos.pucminas.sgm.config;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -13,8 +16,15 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import com.pos.pucminas.sgm.security.common.JwtAuthenticationConfig;
 import com.pos.pucminas.sgm.security.common.JwtTokenAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
+
+import java.util.Arrays;
 
 @EnableWebSecurity
+@Configuration
 public class ZullSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
@@ -55,6 +65,21 @@ public class ZullSecurityConfiguration extends WebSecurityConfigurerAdapter {
                     
                     .antMatchers(HttpMethod.GET, "/api/geo/indicadores/pesquisas/**").hasAnyRole("ADMIN")
                     ;
+    }
+
+    @Bean
+    public FilterRegistrationBean corsFilter() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowCredentials(true);
+        config.addAllowedOrigin("*");
+        config.addAllowedHeader("*");
+        config.addAllowedMethod("*");
+        source.registerCorsConfiguration("/**", config);
+        FilterRegistrationBean bean = new FilterRegistrationBean(new CorsFilter(source));
+        bean.setOrder(0);
+        config.setExposedHeaders(Arrays.asList("Authorization"));
+        return bean;
     }
 
 }
