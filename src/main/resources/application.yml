@@ -21,7 +21,7 @@ eureka:
     serviceUrl:
       defaultZone: https://sgim-eureka-service.herokuapp.com/eureka/
   instance:
-    hostname: localhost
+    hostname: sgim-zuul-service.herokuapp.com
     leaseRenewalIntervalInSeconds: 1
     leaseExpirationDurationInSeconds: 2
   
