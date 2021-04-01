@@ -15,12 +15,15 @@ spring:
 #    hostname: localhost
 
 eureka:
-  instance:
-    hostname: gateway.herokuapp.com
-    homePageUrl: https://${eureka.instance.hostName}/
   client:
+    registerWithEureka: true
+    fetchRegistry: true
     serviceUrl:
-      defaultZone: http://eureka.herokuapp.com/eureka/
+      defaultZone: https://sgim-eureka-service.herokuapp.com/eureka/
+  instance:
+    hostname: localhost
+    leaseRenewalIntervalInSeconds: 1
+    leaseExpirationDurationInSeconds: 2
   
 zuul:
   sensitiveHeaders: Cookie,Set-Cookie
